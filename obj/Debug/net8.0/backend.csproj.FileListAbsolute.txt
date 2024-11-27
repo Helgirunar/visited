@@ -116,3 +116,4 @@ G:\Verkefni\VisitCounter\backend\backend\bin\Debug\net8.0\zh-Hant\Microsoft.Code
 G:\Verkefni\VisitCounter\backend\backend\bin\Debug\net8.0\Microsoft.Extensions.Logging.Debug.dll
 G:\Verkefni\VisitCounter\backend\backend\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
 G:\Verkefni\VisitCounter\backend\backend\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+G:\Verkefni\VisitCounter\backend\backend\obj\Debug\net8.0\backend.sourcelink.json

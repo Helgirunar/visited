@@ -1,0 +1,51 @@
+﻿## User-specific files
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows Installer Package files
+*.vsix
+*.vscode
+
+# User-specific files
+.idea/
+.vscode/
+
+## Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Dd]ist/
+[Dd]ebug/av/
+[Dd]ebug-x64/
+[Dd]ebug-x86/
+[Dd]ist/
+build/
+bin/
+obj/
+
+## Migration files (EF Core specific)
+Migrations/
+# Alternatively, if you want to be more specific to the migration files, you can include:
+# **/*.Designer.cs
+# **/*.Migrations/
+
+## DotNet specific
+.vs/
+.vscode/
+# Rider for JetBrains
+.idea/
+# User-specific configuration files
+user secrets (for ASP.NET Core)
+secrets/
+
+# Windows installer
+*.cab
+*.msi
+
+# macOS specific files
+.DS_Store
+
+# Linux specific files
+*~

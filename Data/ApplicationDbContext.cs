@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using backend.Models;
+using backend.Models.Inputs;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,5 +12,7 @@ namespace backend.Data
             : base(options)
         {
         }
+
+        public DbSet<VisitCounter> VisitCounters { get; set; }
     }
 }
