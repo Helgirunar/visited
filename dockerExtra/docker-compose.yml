@@ -1,0 +1,31 @@
+services:
+  client:
+    image: testing-docker
+    container_name: client
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports: 
+      - 8080:80
+      - 8081:443
+    depends_on:
+      - database
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=runar93
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/certificates/visitCounter.pfx
+    restart: always
+  
+  database: 
+    image: mysql
+    container_name: mysql
+    volumes:
+      - db-volume:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: defaultdb
+      MYSQL_ROOT_PASSWORD: test123
+
+volumes:
+  db-volume:

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using backend.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using MySql.Data.MySqlClient;
 
 namespace backend1
 {
@@ -12,11 +13,36 @@ namespace backend1
             var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
             var builder = WebApplication.CreateBuilder(args);
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            var fallbackString = builder.Configuration.GetConnectionString("FallbackConnection");
 
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            System.Threading.Thread.Sleep(5000);
+
+
+            try
             {
-                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-            });
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    connection.Close();
+                    Console.WriteLine("Using default database");
+					//create the db context.
+					builder.Services.AddDbContext<ApplicationDbContext>(options =>
+					{
+						options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+					});
+                }
+            }
+            catch (Exception ex)
+            {
+				
+                Console.WriteLine(ex.ToString()); //Wil writeout unable to connect error if mysql container is not up.
+                builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                {
+                    options.UseMySql(fallbackString, ServerVersion.AutoDetect(fallbackString));
+                });
+                Console.WriteLine("Using fallback database");
+            }
+
 
             builder.Services.AddCors(options =>
             {
@@ -48,6 +74,11 @@ namespace backend1
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+			using (var scope = app.Services.CreateScope())
+			{
+				var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+				db.Database.Migrate();
+			}
 
             app.MapIdentityApi<ApplicationUser>()
                 .RequireCors(MyAllowSpecificOrigins);
@@ -69,11 +100,11 @@ namespace backend1
             }).RequireAuthorization();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
+            // if (app.Environment.IsDevelopment())
+            // {
                 app.UseSwagger();
                 app.UseSwaggerUI();
-            }
+            // }
 
             app.UseHttpsRedirection();
             app.UseCors(MyAllowSpecificOrigins);
