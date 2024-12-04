@@ -2,7 +2,7 @@
 # Windows Installer files
 *.cab
 *.msi
-*.msm
+*.ms
 *.msp
 
 # Windows Installer Package files
@@ -25,11 +25,6 @@ build/
 bin/
 obj/
 
-## Migration files (EF Core specific)
-Migrations/
-# Alternatively, if you want to be more specific to the migration files, you can include:
-# **/*.Designer.cs
-# **/*.Migrations/
 
 ## DotNet specific
 .vs/
